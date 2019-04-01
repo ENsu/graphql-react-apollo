@@ -6,21 +6,46 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
+import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { BrowserRouter } from 'react-router-dom'
+
+// use the query below to get a TOKEN value
+ /*
+mutation {
+    tokenAuth(username: "jonatas", password: "1234567") {
+      token
+    }
+  }
+ */
+
+const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImpvbmF0YXMiLCJleHAiOjE1NTQxMTI4MDYsIm9yaWdfaWF0IjoxNTU0MTEyNTA2fQ.V23eKmLPISE0a-ZuZvRLOGe84Uamfx2prdY4Xdd7gEk"
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:8000/graphql/'
 })
 
+const authLink = setContext((_, { headers }) => {
+  const token = TOKEN
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `JWT ${token}` : "",
+    }
+  }
+});
+
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-	<App />
-  </ApolloProvider>, 
+	<BrowserRouter>
+	  <ApolloProvider client={client}>
+		<App />
+	  </ApolloProvider>
+	</BrowserRouter>, 
   document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

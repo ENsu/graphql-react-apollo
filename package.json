@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "apollo-boost": "^0.3.1",
+    "apollo-link-context": "^1.0.17",
     "apollo-link-http": "1.5.7",
     "graphql": "^14.2.1",
     "react": "^16.8.6",
     "react-apollo": "^2.5.3",
     "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8"
   },
   "scripts": {
