@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { AUTH_TOKEN } from '../constants'
 import { Mutation } from 'react-apollo'
+import { withRouter } from "react-router-dom";
+
 import gql from 'graphql-tag'
 
 
@@ -85,9 +87,25 @@ class Login extends Component {
   }
 
 _confirm = async data => {
-  const { token } = this.state.login ? data.tokenAuth : data.signup
+  let token = null
+  if (this.state.login) {
+    token = data.tokenAuth.token
+  } else {
+    const { password, name } = this.state
+    this.props.client.mutate({
+      mutation: gql`
+        mutation {
+          tokenAuth(username: "jonatas", password: "1234567") {
+              token
+          }
+        }`
+    }).then(response => {
+      token = response.data.tokenAuth.token
+    })
+  }
+  
   this._saveUserData(token)
-  this.props.history.push(`/`)
+  this.props.history.push("/")
 }
 
 _saveUserData = token => {
@@ -95,4 +113,4 @@ _saveUserData = token => {
   }
 }
 
-export default Login
+export default withRouter(Login)

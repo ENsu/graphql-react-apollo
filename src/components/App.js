@@ -3,6 +3,7 @@ import Header from './Header'
 import Login from './Login'
 import { Switch, Route } from 'react-router-dom'
 import CreateLink from './CreateLink'
+import { ApolloConsumer } from "react-apollo"
 import logo from '../logo.svg';
 import '../styles/App.css';
 
@@ -17,7 +18,10 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={LinkList} />
             <Route exact path="/create" component={CreateLink} />
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" component={() => 
+                <ApolloConsumer>
+                  {client => <Login client={client} />}
+                </ApolloConsumer>} />
           </Switch>
         </div>
       </div>

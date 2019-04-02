@@ -11,6 +11,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { BrowserRouter } from 'react-router-dom'
 import { AUTH_TOKEN } from './constants'
 
+import gql from 'graphql-tag'
+
+
 // use the query below to get a TOKEN value
  /*
 mutation {
@@ -29,7 +32,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `JWT ${token}` : "",
+      authorization: (token && token !== "null") ? `JWT ${token}` : "",
     }
   }
 });
