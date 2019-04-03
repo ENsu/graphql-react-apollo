@@ -11,24 +11,13 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { BrowserRouter } from 'react-router-dom'
 import { AUTH_TOKEN } from './constants'
 
-import gql from 'graphql-tag'
-
-
-// use the query below to get a TOKEN value
- /*
-mutation {
-    tokenAuth(username: "jonatas", password: "1234567") {
-      token
-    }
-  }
- */
-
 const httpLink = createHttpLink({
   uri: 'http://localhost:8000/graphql/'
 })
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN)
+  console.log(`token value: ${token}`)
   return {
     headers: {
       ...headers,
