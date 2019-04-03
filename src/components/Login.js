@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AUTH_TOKEN } from '../constants'
 import { Mutation } from 'react-apollo'
-import { withRouter } from "react-router-dom";
+import { withApollo } from 'react-apollo'
 
 import gql from 'graphql-tag'
 
@@ -116,4 +116,4 @@ _saveUserData = token => {
   }
 }
 
-export default withRouter(Login)
+export default withApollo(Login)

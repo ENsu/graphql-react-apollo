@@ -19,10 +19,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={LinkList} />
             <Route exact path="/create" component={CreateLink} />
-            <Route exact path="/login" component={() => 
-                <ApolloConsumer>
-                  {client => <Login client={client} />}
-                </ApolloConsumer>} />
+            <Route exact path="/login" component={Login} />
             <Route exact path='/search' component={Search} />
           </Switch>
         </div>
